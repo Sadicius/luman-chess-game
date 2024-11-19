@@ -2,6 +2,7 @@ import chess
 import random
 import time
 from chess_game import Chess
+import traceback
 
 class ChessValidator:
     def __init__(self):
@@ -73,16 +74,16 @@ class ChessValidator:
                     our_pos = (rank, file)
                     
                     if official_piece is None:
-                        if our_pos in self.our_board.board:
-                            return False, f"Mismatch at {our_pos}: Official: Empty, Ours: {self.our_board.board[our_pos]}"
+                        if our_pos in self.our_board.get_board():
+                            return False, f"Mismatch at {our_pos}: Official: Empty, Ours: {self.our_board.get_board()[our_pos]}"
                     else:
-                        if our_pos not in self.our_board.board:
+                        if our_pos not in self.our_board.get_board():
                             return False, f"Mismatch at {our_pos}: Official: {official_piece}, Ours: Empty"
-                        if self.our_board.board[our_pos] != official_to_our[official_piece.symbol()]:
-                            return False, f"Mismatch at {our_pos}: Official: {official_piece}, Ours: {self.our_board.board[our_pos]}"
+                        if self.our_board.get_board()[our_pos] != official_to_our[official_piece.symbol()]:
+                            return False, f"Mismatch at {our_pos}: Official: {official_piece}, Ours: {self.our_board.get_board()[our_pos]}"
             return True, ""
         except Exception as e:
-            return False, f"Error comparing boards: {e}"
+            return False, f"Error comparing boards: {traceback.format_exc()}"
     
     def _print_comparison(self):
         """Print both boards side by side for visual comparison"""
@@ -91,7 +92,7 @@ class ChessValidator:
         print("\nOur Chess Implementation Board:")
         self.our_board.print_board()
         print("\nCurrent player (Official):", "White" if self.official_board.turn else "Black")
-        print("Current player (Ours):", self.our_board.current_player)
+        print("Current player (Ours):", self.our_board.get_current_player())
         
         #print("\nMove history:")
         #for i, move in enumerate(self.move_history):

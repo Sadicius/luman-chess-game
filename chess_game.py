@@ -144,6 +144,28 @@ class Chess:
         if pos not in self.board or self.board[pos][0] != self.current_player:
             return []
         return self._get_piece_moves(pos)
+    
+    def get_current_player(self):
+        return self.current_player
+    
+    def set_current_player(self, current_player):
+        self.current_player = current_player
+    
+    def get_board(self):
+        return self.board
+    
+    def clear_board(self):
+        self.board = {}
+    
+    def get_piece(self, pos):
+        return self.board[pos]
+
+    def set_piece(self, pos, piece):
+        self.board[pos] = piece
+    
+    def get_last_move(self):
+        return self.last_move
+
 
     def make_move(self, from_pos, to_pos):
         if to_pos not in self.get_valid_moves(from_pos):
